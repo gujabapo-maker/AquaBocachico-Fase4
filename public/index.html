@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0c4f56">
+<title>AquaBocachico | Monitoreo</title>
+<style>
+:root{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:#17363c;background:#f4f8f6}
+*{box-sizing:border-box}
+body{margin:0}
+button,input,select{font:inherit}
+a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #5cb7be;outline-offset:3px}
+.shell{width:min(100%,470px);margin:auto;min-height:100vh;background:#f4f8f6}
+.content{padding:0 27px 30px}
+.hero{min-height:280px;padding:50px 28px 30px;background:#0c4f56;color:white}
+.brand{display:flex;align-items:center;gap:14px;font-size:20px;font-weight:800}
+.logo{display:grid;place-items:center;width:48px;height:48px;border-radius:15px;background:#126c73;font-size:30px}
+.hero h1{font-size:28px;line-height:1.23;margin:28px 0 13px}
+.hero p{font-size:15px;line-height:1.45;color:#d6ece8;margin:0}
+.card,.info-line{background:white;border:1px solid #e0ebe7;border-radius:18px}
+.card{padding:19px;margin-top:18px}
+.card.first{margin-top:30px}
+.eyebrow{color:#126c73;font-size:12px;font-weight:800;letter-spacing:.3px}
+.farm{margin:19px 0 8px;font-size:24px;line-height:1.25}
+.muted{color:#657d7e}
+.small{font-size:13px;line-height:1.5}
+.rule{height:1px;background:#e0ebe7;margin:22px 0 14px}
+.summary{display:flex;align-items:center;gap:16px;min-height:104px}
+.summary-icon{display:grid;place-items:center;flex:none;width:58px;height:58px;border-radius:18px;background:#fff4d9;color:#9a6112;font-size:27px;font-weight:800}
+.summary strong{font-size:17px;line-height:1.3}
+.summary p{margin:6px 0 0}
+.btn{display:flex;align-items:center;justify-content:center;text-align:center;width:100%;min-height:52px;border:1px solid transparent;border-radius:14px;background:#126c73;color:white;padding:12px;font-size:16px;font-weight:750;cursor:pointer}
+.btn.secondary{color:#126c73;background:white;border-color:#e0ebe7}
+.btn.home{margin-top:36px}
+.top{display:flex;align-items:center;gap:14px;padding:41px 26px 27px}
+.back{display:grid;place-items:center;flex:none;width:44px;height:44px;background:#fff;border:1px solid #e0ebe7;border-radius:14px;font-size:25px}
+.top h1{margin:0;font-size:24px;line-height:1.18}
+.top p{font-size:13px;color:#657d7e;margin:8px 0 0}
+.section{font-size:13px;font-weight:800;letter-spacing:.35px;color:#657d7e;margin:30px 2px 16px}
+.section.big{color:#17363c;font-size:17px;letter-spacing:0;margin-top:24px}
+.pond{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#fff;border:1px solid #e0ebe7;border-radius:18px;min-height:92px;padding:17px;margin:14px 0}
+.pond h2{font-size:20px;margin:0 0 9px}
+.pond p{color:#657d7e;font-size:14px;margin:0}
+.pond-right{display:flex;flex-direction:column;align-items:flex-end}
+.arrow{font-size:28px;font-weight:800;color:#126c73;line-height:1}
+.badge{display:inline-block;min-width:98px;padding:9px 12px;border-radius:20px;background:#edf2f0;color:#63747b;font-size:12px;text-align:center;font-weight:800}
+.badge.NORMAL{background:#e3f4ea;color:#13795c}
+.badge.ADVERTENCIA{background:#fff4d9;color:#9a6112;min-width:126px}
+.badge.CRITICO{background:#fdeae7;color:#b33f37}
+.banner{border-radius:20px;margin:27px 0 22px;padding:19px;background:#edf2f0}
+.banner.NORMAL{background:#e3f4ea}
+.banner.ADVERTENCIA{background:#fff4d9}
+.banner.CRITICO{background:#fdeae7}
+.banner h2{font-size:21px;line-height:1.27;margin:17px 0 9px}
+.banner p{margin:0;font-size:13px;line-height:1.5}
+.metric{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;background:#fff;border:1px solid #e0ebe7;border-radius:18px;padding:12px 16px;margin:12px 0;min-height:76px}
+.metric span{display:block;font-size:14px;color:#657d7e;margin-bottom:4px}
+.metric strong{font-size:22px;line-height:1.2}
+.metric small{max-width:130px;font-size:11px;line-height:1.4;color:#657d7e;text-align:right}
+.metric .warn{color:#9a6112}
+.metric .danger{color:#b33f37}
+.actions{display:grid;gap:12px;margin-top:28px}
+.info-main{margin-top:24px}
+.info-main h2{font-size:27px;margin:16px 0 8px}
+.info-line{padding:13px 17px;margin:12px 0}
+.info-line span{display:block;color:#657d7e;font-size:12px;margin-bottom:7px}
+.info-line strong{font-size:18px}
+.note{font-size:13px;line-height:1.5;color:#657d7e;margin:12px 1px}
+.warning{background:#fff4d9;color:#75501d;padding:13px;border-radius:12px;font-size:13px;line-height:1.45}
+.issues{list-style:none;padding:0}
+.issues li{background:#fff;border:1px solid #e0ebe7;border-radius:14px;padding:14px 16px;margin:10px 0;font-weight:650}
+.edit label{display:block;font-size:14px;font-weight:700;margin:19px 0 8px}
+.edit input,.edit select{display:block;width:100%;padding:13px 14px;border:1px solid #cddeda;border-radius:12px;background:#fff;color:#17363c;font-size:16px}
+.edit .btn{margin-top:25px}
+footer{text-align:center;font-size:12px;line-height:1.5;color:#657d7e;padding:24px 28px 36px}
+.dot{display:inline-block;width:8px;height:8px;margin-right:5px;background:#d29b42;border-radius:50%}
+.dot.on{background:#13795c}
+@media(min-width:600px){body{padding:22px}.shell{min-height:calc(100vh - 44px);border:1px solid #e0ebe7;border-radius:22px;overflow:hidden;box-shadow:0 8px 40px #102b2b0d}}
+@media(prefers-reduced-motion:no-preference){.btn,.pond{transition:border-color .15s,background-color .15s}.pond:hover{border-color:#126c73}.btn:hover{background:#0c4f56}}
+</style>
+</head>
+<body>
+<div class="shell">
+ <main id="app"></main>
+ <footer id="pie"></footer>
+</div>
+<script>
+const $ = id => document.getElementById(id);
+const base = '/api';
+const keyCultivos = 'aquabocachico-cultivos';
+const keyFinca = 'aquabocachico-finca';
+const defaultEstanques = ['01','02','03'].map((n,i) => ({id:'estanque-'+n,nombre:'Estanque '+n,vinculado:i===0,lecturaActual:null}));
+let datos = {finca:'Finca sin configurar',estanques:defaultEstanques};
+let conexion = {mqtt:false};
+let rangos = null;
+let errorRed = false;
+let consultando = false;
+let cultivos = {};
+try {cultivos = JSON.parse(localStorage.getItem(keyCultivos) || '{}') || {}} catch {cultivos = {}}
+function limpio(v){return String(v ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function num(v){return Number(v).toLocaleString('es-CO',{maximumFractionDigits:2})}
+function finca(){return localStorage.getItem(keyFinca) || datos.finca || 'Finca sin configurar'}
+function estanque(id){return datos.estanques.find(e=>e.id===id) || datos.estanques[0]}
+function lectura(e){return e?.lecturaActual || null}
+function estado(a){return a?(a.coincide===false?a.estadoCalculado:a.estado):'SIN_DATOS'}
+function nombreEstado(s){return ({NORMAL:'Normal',ADVERTENCIA:'Advertencia',CRITICO:'Crítico',SIN_DATOS:'Sin datos'})[s] || 'Sin datos'}
+function badge(s){return '<span class="badge '+limpio(s)+'">'+nombreEstado(s)+'</span>'}
+function antigua(a){return !!a && Date.now()-Date.parse(a.recibidoEn)>120000}
+function fecha(a){return a?.recibidoEn?new Date(a.recibidoEn).toLocaleString('es-CO'):''}
+function urlEstanque(id){return '#/estanques/'+id}
+function boton(texto,url,clase=''){return '<a class="btn '+clase+'" href="'+url+'">'+texto+'</a>'}
+function cabecera(titulo,sub,volver){return '<header class="top"><a class="back" href="'+volver+'" aria-label="Volver">←</a><div><h1>'+limpio(titulo)+'</h1><p>'+limpio(sub)+'</p></div></header>'}
+function fila(titulo,valor){return '<div class="info-line"><span>'+titulo+'</span><strong>'+limpio(valor)+'</strong></div>'}
+function ruta(){
+ const p=location.hash.replace(/^#\/?/,'').split('/').filter(Boolean);
+ if(p[0]!=='estanques')return {vista:'inicio'};
+ if(!p[1])return {vista:'lista'};
+ return {vista:p[2]||'detalle',id:p[1]};
+}
+function inicio(){
+ const conLecturas=datos.estanques.filter(e=>lectura(e));
+ const alertas=conLecturas.filter(e=>estado(lectura(e))!=='NORMAL').length;
+ const resumen=!conLecturas.length?'Esperando las primeras lecturas':alertas?alertas+' estanque'+(alertas===1?' necesita':'s necesitan')+' revisión':'Sin alertas en las lecturas recibidas';
+ return '<div class="hero"><div class="brand"><span class="logo">≈</span>AQUABOCACHICO</div><h1>Sistema Iot de vigilancia</h1><p>Consulta las condiciones del agua y conoce qué estanque necesita atención.</p></div>'+
+ '<div class="content"><section class="card first"><span class="eyebrow">MI FINCA</span><h2 class="farm">'+limpio(finca())+'</h2><p class="small muted">Pivijay, Magdalena</p><div class="rule"></div><strong>'+datos.estanques.length+' estanques en el panel</strong></section>'+
+ '<section class="card summary"><div class="summary-icon">!</div><div><strong>'+resumen+'</strong><p class="small muted">Consulta el estado de tus estanques.</p></div></section>'+
+ boton('Ver estanques','#/estanques','home')+'</div>';
+}
+function lista(){
+ return cabecera('Mis estanques',finca(),'#/')+'<div class="content"><h2 class="section big">Selecciona un estanque</h2>'+
+ datos.estanques.map(e=>{
+  const c=cultivos[e.id]||{},detalle=c.etapa?c.etapa+(c.dias?' · '+c.dias+' días':''):(e.vinculado?'Cultivo sin registrar':'Sin emisor vinculado');
+  return '<a class="pond" href="'+urlEstanque(e.id)+'"><div><h2>'+limpio(e.nombre)+'</h2><p>'+limpio(detalle)+'</p></div><div class="pond-right">'+badge(estado(lectura(e)))+'<span class="arrow">›</span></div></a>';
+ }).join('')+'<p class="note">Selecciona un estanque para consultar sus lecturas.</p></div>';
+}
+function metrica(titulo,valor,objetivo,clase=''){
+ return '<div class="metric"><div><span>'+titulo+'</span><strong class="'+clase+'">'+limpio(valor)+'</strong></div><small>'+limpio(objetivo)+'</small></div>';
+}
+function detalle(id){
+ const e=estanque(id),a=lectura(e),s=estado(a),issues=a?.incidencias||[];
+ const titulo=!a?'Sin lecturas disponibles':issues.length===1?issues[0].mensaje:issues.length>1?issues.length+' variables necesitan atención':'Condiciones estables';
+ const desc=!a?(e.vinculado?'Enciende el emisor Wokwi para recibir datos.':'Este estanque todavía no tiene emisor vinculado.'):issues.length?'Consulta las variables que necesitan revisión.':'Los valores se encuentran dentro de los rangos configurados.';
+ const temp=rangos?.temperatura?num(rangos.temperatura.min)+'–'+num(rangos.temperatura.max)+' °C':'26–30 °C';
+ const ph=rangos?.ph?num(rangos.ph.min)+'–'+num(rangos.ph.max):'6,5–7,5';
+ const od=rangos?.oxigeno?'> '+num(rangos.oxigeno.minExclusivo)+' mg/L':'> 4,5 mg/L';
+ const color=(variable)=>issues.some(i=>i.variable===variable)?(s==='CRITICO'?'danger':'warn'):'';
+ return cabecera(e.nombre,finca(),'#/estanques')+'<div class="content"><section class="banner '+s+'">'+badge(s)+'<h2>'+limpio(titulo)+'</h2><p>'+limpio(desc)+'</p></section>'+
+ (a&&antigua(a)?'<p class="warning">Esta es una lectura anterior. Enciende el emisor para recibir información nueva.</p>':'')+
+ (a&&a.coincide===false?'<p class="warning">El estado enviado no coincide con el estado calculado por el backend.</p>':'')+
+ '<h2 class="section">CALIDAD DEL AGUA</h2>'+
+ metrica('Temperatura',a?num(a.T)+' °C':'—','Objetivo: '+temp,color('temperatura'))+
+ metrica('pH',a?num(a.pH):'—','Objetivo: '+ph,color('ph'))+
+ metrica('Oxígeno disuelto',a?num(a.OD)+' mg/L':'—','Meta: '+od,color('oxigeno'))+
+ (a?'<p class="note">Última lectura: '+limpio(fecha(a))+'</p>':'')+
+ '<div class="actions">'+boton('Información del estanque',urlEstanque(e.id)+'/info')+
+ boton('Ver alertas',urlEstanque(e.id)+'/alertas','secondary')+'</div></div>';
+}
+function informacion(id){
+ const e=estanque(id),c=cultivos[e.id]||{},etapa=c.etapa||'Sin registrar',dias=c.dias?c.dias+' días':'Sin registrar';
+ return cabecera('Información del estanque',e.nombre,urlEstanque(e.id))+
+ '<div class="content"><section class="card info-main"><span class="eyebrow">CULTIVO DE BOCACHICO</span><h2>'+limpio(etapa)+'</h2><p class="muted">Tiempo en cultivo: '+limpio(dias)+'</p></section><h2 class="section">DATOS DEL CULTIVO</h2>'+
+ fila('Especie','Bocachico')+fila('Etapa',etapa)+fila('Edad del cultivo',dias)+fila('Estanque',e.nombre)+
+ '<div class="actions">'+boton('Registrar información',urlEstanque(e.id)+'/editar')+boton('Volver al monitoreo',urlEstanque(e.id),'secondary')+'</div></div>';
+}
+function alertas(id){
+ const e=estanque(id),a=lectura(e),s=estado(a),issues=a?.incidencias||[];
+ const titulo=!a?'No hay lecturas':issues.length===1?issues[0].mensaje:issues.length?issues.length+' variables requieren atención':'Condiciones estables';
+ const desc=!a?'Todavía no hay datos para evaluar este estanque.':issues.length?'Revisa las variables indicadas.':'Las variables no presentan alertas en esta lectura.';
+ return cabecera('Alertas del estanque',e.nombre,urlEstanque(e.id))+
+ '<div class="content"><section class="banner '+s+'"><span class="eyebrow">ESTADO DE LA ÚLTIMA LECTURA</span><h2>'+nombreEstado(s)+'</h2><strong>'+limpio(titulo)+'</strong><p style="margin-top:12px">'+desc+'</p></section>'+
+ '<h2 class="section">¿QUÉ NECESITA ATENCIÓN?</h2>'+
+ (issues.length?'<ul class="issues">'+issues.map(i=>'<li>'+limpio(i.mensaje)+'</li>').join('')+'</ul>':'<div class="card">'+(a?'Sin valores fuera de rango.':'Sin lecturas para mostrar alertas.')+'</div>')+
+ (a?'<p class="note">Lectura recibida: '+limpio(fecha(a))+(antigua(a)?' · Sin actualización reciente':'')+'</p>':'')+
+ '<div class="actions">'+boton('Volver al estanque',urlEstanque(e.id))+'</div></div>';
+}
+function editar(id){
+ const e=estanque(id),c=cultivos[e.id]||{};
+ return cabecera('Datos del cultivo',e.nombre,urlEstanque(e.id)+'/info')+
+ '<div class="content"><form id="form-cultivo" class="edit"><label for="finca">Nombre de la finca</label>'+
+ '<input id="finca" name="finca" maxlength="70" value="'+limpio(localStorage.getItem(keyFinca)||'')+'" placeholder="Nombre de la finca">'+
+ '<label for="etapa">Etapa del cultivo</label><select id="etapa" name="etapa"><option value="">Seleccionar etapa</option>'+
+ ['Alevines','Engorde'].map(v=>'<option value="'+v+'" '+(c.etapa===v?'selected':'')+'>'+v+'</option>').join('')+'</select>'+
+ '<label for="dias">Días del cultivo</label><input id="dias" name="dias" type="number" min="1" max="3650" step="1" value="'+(c.dias||'')+'" placeholder="Días transcurridos">'+
+ '<p class="note">Esta información se guarda solo en este navegador, no en el servidor.</p><button type="submit" class="btn">Guardar información</button></form></div>';
+}
+function mostrar(){
+ const r=ruta(),e=estanque(r.id);
+ const vistas={inicio:()=>inicio(),lista:()=>lista(),detalle:()=>detalle(e.id),info:()=>informacion(e.id),alertas:()=>alertas(e.id),editar:()=>editar(e.id)};
+ $('app').innerHTML=(vistas[r.vista]||vistas.inicio)();
+ $('pie').innerHTML='<span class="dot '+(conexion.mqtt?'on':'')+'"></span>'+(conexion.mqtt?'MQTT conectado':'MQTT desconectado')+
+ ' · '+(errorRed?'Sin actualización del servidor':'Actualización cada 3 segundos')+
+ '<div style="margin-top:8px">Comunicación MQTT/Wi-Fi simulada. LoRa no validado.</div>';
+}
+async function actualizar(){
+ if(consultando)return;
+ consultando=true;
+ try{
+  const respuestas=await Promise.all([
+   fetch(base+'/estado',{cache:'no-store'}),
+   fetch(base+'/estanques',{cache:'no-store'}),
+   ...(rangos?[]:[fetch(base+'/rangos',{cache:'no-store'})])
+  ]);
+  if(respuestas.some(r=>!r.ok))throw Error('Servicio no disponible');
+  conexion=await respuestas[0].json();
+  datos=await respuestas[1].json();
+  if(respuestas[2])rangos=await respuestas[2].json();
+  errorRed=false;
+ }catch{errorRed=true}
+ finally{consultando=false;if(ruta().vista!=='editar')mostrar()}
+}
+$('app').addEventListener('submit',event=>{
+ if(event.target.id!=='form-cultivo')return;
+ event.preventDefault();
+ const r=ruta(),e=estanque(r.id),fd=new FormData(event.target);
+ const etapa=String(fd.get('etapa')||'');
+ const entradaDias=String(fd.get('dias')||'');
+ const dias=Number(entradaDias);
+ if(!['','Alevines','Engorde'].includes(etapa))return;
+ if(entradaDias!==''&&(!Number.isInteger(dias)||dias<1||dias>3650))return;
+ cultivos[e.id]={etapa,dias:etapa&&dias?dias:null};
+ localStorage.setItem(keyCultivos,JSON.stringify(cultivos));
+ const nombre=String(fd.get('finca')||'').trim();
+ if(nombre)localStorage.setItem(keyFinca,nombre);else localStorage.removeItem(keyFinca);
+ location.hash=urlEstanque(e.id)+'/info';
+});
+window.addEventListener('hashchange',()=>{mostrar();window.scrollTo(0,0)});
+mostrar();
+actualizar();
+setInterval(actualizar,3000);
+</script>
+</body>
+</html>

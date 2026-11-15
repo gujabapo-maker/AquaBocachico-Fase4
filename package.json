@@ -1,0 +1,10 @@
+{
+  "name": "aquabocachico-backend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "API de monitoreo para las lecturas simuladas de AquaBocachico",
+  "engines": { "node": ">=20" },
+  "scripts": { "start": "node src/server.mjs", "test": "node --test" },
+  "dependencies": { "mqtt": "^5.10.0" }
+}

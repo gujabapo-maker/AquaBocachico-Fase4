@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: aquabocachico-backend
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MQTT_URL
+        value: mqtt://broker.emqx.io:1883
+      - key: MQTT_TOPIC
+        value: aquabocachico/g3/v43/478159149049553921/datos
+      - key: FINCA_NOMBRE
+        value: Finca sin configurar
