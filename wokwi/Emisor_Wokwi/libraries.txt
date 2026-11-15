@@ -1,0 +1,5 @@
+OneWire
+DallasTemperature
+Adafruit GFX Library
+Adafruit ILI9341
+PubSubClient
