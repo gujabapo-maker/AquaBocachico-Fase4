@@ -5,4 +5,4 @@
 
 Ambos proyectos usan el broker público `broker.emqx.io` y el mismo tema MQTT. La comunicación demostrada es MQTT/Wi-Fi simulado; la transmisión LoRa no se ha validado.
 
-Los archivos `sketch.ino` y `libraries.txt` incluyen el firmware y las dependencias; el diagrama del circuito se aporta por separado en el paquete original V4.3 de Wokwi.
+Cada carpeta contiene `sketch.ino`, `diagram.json` y `libraries.txt` para importar el circuito en Wokwi.
